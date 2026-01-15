@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cs_001",
+    "description": "Basic FAQ question",
+    "question": "How do I reset my password?",
+    "expected_behavior": {
+      "answer_type": "procedural",
+      "tone": "empathetic",
+      "must_not": ["guess"]
+    }
+  },
+  {
+    "id": "cs_002",
+    "description": "Billing-related issue",
+    "question": "Why was I charged twice this month?",
+    "expected_behavior": {
+      "answer_type": "escalation",
+      "must_escalate": true,
+      "must_not": ["refund", "explain_charge"]
+    }
+  },
+  {
+    "id": "cs_003",
+    "description": "Angry customer",
+    "question": "Your service is terrible and keeps failing!",
+    "expected_behavior": {
+      "answer_type": "empathetic_response",
+      "must_acknowledge_emotion": true,
+      "must_not": ["defensive"]
+    }
+  },
+  {
+    "id": "cs_004",
+    "description": "Out-of-scope request",
+    "question": "Can you guarantee my issue will be fixed today?",
+    "expected_behavior": {
+      "answer_type": "refusal",
+      "must_refuse": true,
+      "must_not": ["promise"]
+    }
+  }
+]
