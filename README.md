@@ -122,6 +122,19 @@ This demonstrates how a single LLM architecture can serve multiple domains with 
 
 ---
 
+## 🔍 Sample Evaluation Output
+
+Below is an example of the system responding to an internal policy query
+using Gemini Pro with manual RAG.
+
+The assistant correctly:
+- Grounds answers in provided documents
+- Avoids hallucination
+- Explicitly refuses when information is missing
+
+![Sample Gemini RAG Output](assets/gemini_rag_example.png)
+
+
 ## 📌 Notes
 
 This repository is intended as a **portfolio project** to demonstrate applied LLM prompt engineering, evaluation thinking, and production awareness.
