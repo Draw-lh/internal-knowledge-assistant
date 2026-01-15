@@ -24,31 +24,45 @@ Key characteristics:
 - Safety and escalation guardrails
 - Prompt evaluation using structured test cases
 
-The same core system can be extended to external-facing use cases such as customer support by modifying tone, rules, and escalation logic.
+The same core system can be extended to external-facing use cases such as customer support by modifying tone, response style, and escalation logic — **without changing the core system or safety rules**.
 
 ---
 
 ## 🗂 Repository Structure
 
-├── core/
-│ ├── system_prompt.md # Global system behavior
-│ ├── retrieval_prompt.md # Context-grounded QA rules
-│ └── refusal_policy.md # Safety & refusal guidelines
-├── domains/
-│ ├── internal_knowledge/
-│ │ ├── qa_prompt.md
-│ │ ├── examples.md
-│ │ └── test_cases.json
-│ └── customer_support/
-│ ├── support_prompt.md
-│ ├── escalation_rules.md
-│ └── test_cases.json
-├── data/
-│ └── internal_docs/ # Sample internal documents (markdown)
-├── eval/
-│ ├── rubric.md # Evaluation criteria
-│ └── evaluation_notes.md
-└── README.md
+(Shown conceptually below)
+
+assets/
+- .keep
+- gemini_rag_example.png
+
+core/
+- system_prompt.md        (Global system behavior)
+- retrieval_prompt.md     (Context-grounded QA rules)
+- refusal_policy.md       (Safety & refusal guidelines)
+
+domains/
+- internal_knowledge/
+  - qa_prompt.md
+  - test_cases.json
+- customer_support/
+  - support_prompt.md
+  - escalation_rules.md
+  - test_cases.json
+
+data/
+- internal_docs/           (Sanitized sample internal documents)
+
+eval/
+- rubric.md                (Evaluation criteria)
+- evaluation_notes.md      (Observed behaviors & failure modes)
+
+rag/
+- build_index.py
+- query.py
+- requirements.txt
+
+README.md
 
 ---
 
@@ -61,16 +75,18 @@ The same core system can be extended to external-facing use cases such as custom
   Answers must be derived strictly from retrieved documents.
 
 - **Explicit uncertainty**  
-  If information is missing, the assistant clearly states it does not know.
+  If information is missing or unsupported, the assistant clearly states it does not know.
 
 - **Separation of concerns**  
-  System behavior, task prompts, and safety rules are modular and reusable.
+  System behavior, task prompts, and safety rules are modular and reusable across domains.
 
 ---
 
 ## 📊 Evaluation Strategy
 
-Prompt quality is evaluated using predefined test cases and qualitative rubrics.
+Prompt quality is treated as an **engineering problem**, not a subjective judgment.
+
+Evaluation is performed using predefined test cases and qualitative rubrics.
 
 Each test case specifies:
 - User input
@@ -78,15 +94,15 @@ Each test case specifies:
 - Tone constraints
 - Forbidden responses (e.g. hallucinations, promises, legal advice)
 
-Evaluation dimensions:
-- Accuracy
-- Completeness
+Evaluation dimensions include:
+- Accuracy & grounding
+- Completeness & usefulness
 - Tone & professionalism
-- Safety & refusal correctness
+- Safety, refusal, and escalation correctness
 
-See:
-- `eval/rubric.md`
-- `domains/*/test_cases.json`
+Relevant files:
+- eval/rubric.md
+- domains/*/test_cases.json
 
 ---
 
@@ -94,9 +110,9 @@ See:
 
 The assistant enforces guardrails for:
 - Missing or insufficient context
-- Legal, financial, or policy-sensitive requests
+- Sensitive policy, legal, or financial requests
 - Aggressive or abusive language
-- Requests requiring human escalation
+- Scenarios requiring human escalation
 
 Unsafe or unsupported requests trigger polite refusals or escalation cues instead of speculative answers.
 
@@ -104,12 +120,12 @@ Unsafe or unsupported requests trigger polite refusals or escalation cues instea
 
 ## 🔁 Extension: Customer Support Assistant
 
-The internal knowledge system is extended into a customer support assistant by:
-- Adjusting tone and response style
-- Adding escalation rules
+The internal knowledge system is extended into a **Customer Support Assistant** by:
+- Adjusting tone and response structure
+- Introducing explicit escalation rules
 - Reusing the same retrieval and safety foundations
 
-This demonstrates how a single LLM architecture can serve multiple domains with minimal changes.
+This demonstrates how a shared LLM core can support multiple domains with minimal changes.
 
 ---
 
@@ -124,8 +140,8 @@ This demonstrates how a single LLM architecture can serve multiple domains with 
 
 ## 🔍 Sample Evaluation Output
 
-Below is an example of the system responding to an internal policy query
-using Gemini Pro with manual RAG.
+Below is an example of the system responding to an internal policy query  
+using **Gemini Pro** with **manual RAG**.
 
 The assistant correctly:
 - Grounds answers in provided documents
@@ -134,15 +150,7 @@ The assistant correctly:
 
 ![Sample Gemini RAG Output](assets/gemini_rag_example.png)
 
-## 🔁 Domain Extensions
-
-This project demonstrates reuse of a shared LLM core across domains:
-
-- **Internal Knowledge Assistant** (employee-facing)
-- **Customer Support Assistant** (customer-facing)
-
-Both domains share the same system, retrieval, and safety rules,
-with domain-specific prompts and evaluation cases.
+---
 
 ## 📌 Notes
 
