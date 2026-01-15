@@ -134,6 +134,15 @@ The assistant correctly:
 
 ![Sample Gemini RAG Output](assets/gemini_rag_example.png)
 
+## 🔁 Domain Extensions
+
+This project demonstrates reuse of a shared LLM core across domains:
+
+- **Internal Knowledge Assistant** (employee-facing)
+- **Customer Support Assistant** (customer-facing)
+
+Both domains share the same system, retrieval, and safety rules,
+with domain-specific prompts and evaluation cases.
 
 ## 📌 Notes
 
